@@ -1,0 +1,298 @@
+// rractive.idl : IDL source for rractive
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (rractive.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(C9AEAE28-CA06-4FD2-90CE-526385A343EE),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IRRActiveConnector : IDispatch {
+	//[gs]etConfigParameter
+	[propget, helpstring("Enable Prewarn feature")]
+	HRESULT EnablePrewarn([out, retval] VARIANT_BOOL* retval);
+	[propput, helpstring("Enable Prewarn feature")]
+	HRESULT EnablePrewarn([in] VARIANT_BOOL val);
+
+	[propget, helpstring("Acknowledge repeated passings with blink/beep")]
+	HRESULT BlinkBeepRepeatedPassing([out, retval] VARIANT_BOOL* retval);
+	[propput, helpstring("Acknowledge repeated passings with blink/beep")]
+	HRESULT BlinkBeepRepeatedPassing([in] VARIANT_BOOL val);
+
+	[propget, helpstring("Headphone Jack is Beep Output (false) or Impulse Input (true)")]
+	HRESULT UseBeepOutputAsImpulseInput([out, retval] VARIANT_BOOL* retval);
+	[propput, helpstring("Headphone Jack is beep Output (false) or Impulse Input (true)")]
+	HRESULT UseBeepOutputAsImpulseInput([in] VARIANT_BOOL val);
+
+	[propget, helpstring("Shutdown Decoder after Power Down (eG PC is shut down) - only enabled when timing finished!")]
+	HRESULT AutoShutdownAfterPowerloss([out, retval] VARIANT_BOOL* retval);
+	[propput, helpstring("Shutdown Decoder after Power Down (eG PC is shut down) - only enabled when timing finished!")]
+	HRESULT AutoShutdownAfterPowerloss([in] VARIANT_BOOL val);
+
+	[propget, helpstring("Interval[s] for automatic Decoder status refresh")]
+	HRESULT StatusRefreshInterval([out, retval] BYTE* retval);
+	[propput, helpstring("Interval[s] for automatic Decoder status refresh")]
+	HRESULT StatusRefreshInterval([in] BYTE val);
+
+	[propget, helpstring("Operation Mode of the Decoder")]
+	HRESULT OperationMode([out, retval] enum RRActiveOperationMode* retval);
+	[propput, helpstring("Operation Mode of the Decoder")]
+	HRESULT OperationMode([in] enum RRActiveOperationMode val);
+
+	[propget, helpstring("Loop ID (1..8)")]
+	HRESULT LoopID([out, retval] byte* retval);
+	[propput, helpstring("Loop ID (1..8)")]
+	HRESULT LoopID([in] byte val);
+
+	[propget, helpstring("Loop Power (0..100) with 0=off")]
+	HRESULT LoopPower([out, retval] byte* retval);
+	[propput, helpstring("Loop Power (0..100) with 0=off")]
+	HRESULT LoopPower([in] byte val);
+
+	[propget, helpstring("Channel ID (1..8)")]
+	HRESULT ChannelID([out, retval] byte* retval);
+	[propput, helpstring("Channel ID (1..8)")]
+	HRESULT ChannelID([in] byte val);
+
+	[propget, helpstring("Maximum age since reception in (0..255)s/16 for a passing to blink")]
+	HRESULT BlinkDeadTime([out, retval] byte* retval);
+	[propput, helpstring("Maximum age since reception in (0..255)s/16 for a passing to blink")]
+	HRESULT BlinkDeadTime([in] byte val);
+
+	[propget, helpstring("Charging of internal battery allowed (disable when computer itself running on BAT)")]
+	HRESULT ChargingAllowed([out, retval] VARIANT_BOOL* retval);
+	[propput, helpstring("Charging of internal battery allowed (disable when computer itself running on BAT)")]
+	HRESULT ChargingAllowed([in] VARIANT_BOOL val);
+
+	//getInfo
+	[propget, helpstring("ID of connected Decoder")]
+	HRESULT DecoderID([out, retval] BSTR* retval);
+
+	[propget, helpstring("Firmware version of connected Decoder, 23 => 2.3")]
+	HRESULT DecoderFirmwareVersion([out, retval] byte* retval);
+
+	[propget, helpstring("Hardware version of connected Decoder, 22 => 2.2")]
+	HRESULT DecoderHardwareVersion([out, retval] byte* retval);
+
+	[propget, helpstring("Decoder internal temperature in °C")]
+	HRESULT Temperature([out, retval] short* retval);
+
+	[propget, helpstring("Health Status of Loop")]
+	HRESULT LoopStatus([out, retval] enum RRActiveLoopStatus* retval);
+
+	[propget, helpstring("Supply Voltage [dV], example 52 => 5.2V")]
+	HRESULT SupplyVoltage([out, retval] byte* retval);
+
+	[propget, helpstring("Box Type (Managemet, USB Timing, ...")]
+	HRESULT BoxType([out, retval] enum RRActiveBoxType* retval);
+
+	[propget, helpstring("Internal battery voltage")]
+	HRESULT BatteryVoltage([out, retval] byte* retval);
+
+	[propget, helpstring("Remaining operation time on internal battery in hours")]
+	HRESULT BatteryHours([out, retval] byte* retval);
+
+	[propget, helpstring("Internal battery charging state")]
+	HRESULT BatteryState([out, retval] enum RRActiveBatteryState* retval);
+
+	[propget, helpstring("Internal battery fill state in percent")]
+	HRESULT BatteryFillstate([out, retval] byte* retval);
+
+	[propget, helpstring("Count of new passings")]
+	HRESULT UnreadPassings([out, retval] long* retval);
+
+	[propget, helpstring("Internal high precision timestamp")]
+	HRESULT CurrentTimestamp([out, retval] BSTR* retval);
+
+	// other data
+	[propget, helpstring("Other active system components detected, only valid with DecoderID!=''")]
+	HRESULT Beacons([out, retval] struct RRActiveBeacon* retval[10]);
+	/*
+	[propget, helpstring("")]
+	HRESULT ([out, retval] * retval);
+	[propput, helpstring("")]
+	HRESULT ([in] val);
+	*/
+
+	HRESULT IsConnected([out, retval] VARIANT_BOOL* retval);
+	HRESULT ResetPassings([out, retval] VARIANT_BOOL* retval);
+	HRESULT RestartDecoder([out, retval] VARIANT_BOOL* retval);
+
+	HRESULT GetNextPassing([out, retval] struct RRActivePassing* retval);
+	
+
+	[helpstring("Opens port for communication, expects port Number as argument (eg '1' for 'COM1')")]
+	HRESULT Connect([in] byte PortNumber, [out, retval] VARIANT_BOOL* retval);
+
+	[helpstring("Closes the port and resets internal Error State")]
+	HRESULT Disconnect();
+
+	[helpstring("Returns information about last Error or false if no error present")]
+	HRESULT GetLastError( [out] LONG* ErrorCode, [out] BSTR* ErrorString, [out] BSTR* Facility,
+		[out, retval] VARIANT_BOOL* error_available);
+
+	[propget, helpstring("Is Connection Alive?")]
+	HRESULT Connected([out, retval] VARIANT_BOOL* retval);
+
+	// temporary beacons
+	[propget, helpstring("Count of Received Beacons")]
+	HRESULT BeaconCount([out, retval] byte* retval);
+	[helpstring("Get Single Beacon")]
+	HRESULT GetBeacon([in] byte BeaconNumber, [out, retval] struct RRActiveBeacon* retval);
+
+};
+#if defined WITHLOOPSCOLLECTION
+
+[
+	object,
+	uuid(2E1B5A7E-4F97-496D-94DB-7DD05B006C48),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IRRActiveRemoteLoops : IDispatch{
+	[id(DISPID_NEWENUM), propget]                            // (3)
+	HRESULT _NewEnum([out, retval] IUnknown** ppUnk);
+
+	[id(DISPID_VALUE), propget]                              // (4)
+	HRESULT Item([in] long Index, [out, retval] struct RRActiveBeacon* pVal); // (5)
+
+	[id(0x00000001), propget]                                // (6)
+	HRESULT Count([out, retval] long* pVal);
+};
+#endif
+[
+	uuid(001EEF53-0365-48EF-B122-D973E91B7413),
+	version(1.0),
+]
+library rractiveLib
+{
+	enum RRActiveFailures {
+		// match RRActiveError + 200!
+		E_success = 0,
+		E_protocol_set_time = 0x200,
+		E_parameter_invalid_range,
+		E_passing_buffer_empty,
+	};
+	enum RRActiveOperationMode {
+		OMODE_Scan = 5,
+		OMODE_Timing = 6
+	};
+	enum RRActiveBoxType {
+		BTYPE_ActiveExtension = 10,
+		BTYPE_LoopBox = 20,
+		BTYPE_ManagementBox = 30,
+		BTYPE_USBBox = 40
+	};
+	enum RRActiveBatteryState {
+		BATT_fault = 0,
+		BATT_charging_12V = 1,
+		BATT_charging_usb = 2,
+		BATT_notcharging = 3,
+		BATT_discharging = 4,
+		BATT_unknown = 5
+	};
+	enum RRActiveLoopStatus {
+		LOOP_OK = 0x00,
+		LOOP_FAULT = 0x01,
+		LOOP_UNDERPOWER = 0x02,
+		LOOP_OVERVOLTAGE = 0x03
+	};
+	enum RRActiveConfigParameterList {
+		CONFPARAM_pushPreWarn = 0x01,
+		CONFPARAM_blinkBeepRepeatedPassing = 0x02,
+		CONFPARAM_impulseInBeepOut = 0x03,
+		CONFPARAM_noPowerShutdown = 0x04,
+	};
+	enum RRActivePowerSource {
+		POWER_12V = 0x00,
+		POWER_USB = 0x01,
+		POWER_BATT = 0x02,
+	};
+	enum RRActiveTimingMode {
+		TMODE_ActiveExtension = 0x00,
+		TMODE_StoreMode = 0x01,
+		TMODE_RepeatMode = 0x02,
+		TMODE_RepeatImpulseMode = 0x03,
+	};
+	struct RRActivePassing {
+		BSTR TimeStamp;
+		BSTR TransponderCode;
+		INT BatteryVoltage;
+		BYTE ChannelID;
+		VARIANT_BOOL isDeepSleepWakeup;
+		VARIANT_BOOL isStoredModePassing;
+		VARIANT_BOOL isStoredPassing;
+		BYTE Hits;
+		BYTE LoopID;
+		LONG WakeupCounter;
+		BYTE noAckCounter;
+		BYTE noAccessCounter;
+		BYTE RSSI;
+		INT Temperature;
+		BYTE RawStatus;
+		LONG PassingNo;
+	};
+	struct RRActiveBeacon {
+		BSTR DecoderID;
+		enum RRActiveLoopStatus LoopStatus;
+		enum RRActivePowerSource PowerSource;
+		enum RRActiveTimingMode mode;
+		// loopData Start
+		BYTE LoopId;
+		BYTE ChanId;
+		VARIANT_BOOL LoopOnly;
+		BYTE LoopPower;
+		BYTE VoltageAndBattery;
+		BSTR TimeStamp;
+		BYTE NoisePeak;
+		BYTE NoiseAvg;
+		BYTE TransponderLQIavg;
+		BYTE TransponderRSSIavg;
+		BYTE BeaconLQI;
+		BYTE BeaconRSSI;
+	};
+
+	importlib("stdole2.tlb");
+	[
+		uuid(7A0E49BA-20D7-4ACD-B00C-CDCD661BDCEA)		
+	]
+	dispinterface _IRRActiveConnectorEvents
+	{
+		// EVENTS currently not available!
+		properties:	
+		methods:
+			[id(0), helpstring("New Passing Available")]
+			HRESULT NewPassing();
+			[id(1), helpstring("New Prewarn Available")]
+			HRESULT NewPrewarn([in] BSTR TransponderCode);
+			[id(2), helpstring("Communication Error, Connection Lost")]
+			HRESULT ConnectionBroken();
+			[id(3), helpstring("Recoverable Error Occurred")]
+			HRESULT ErrorOccured();
+	};
+	[
+		uuid(806DB766-1EBB-4BF7-9F3B-C566144095FE)		
+	]
+	coclass RRActiveConnector
+	{
+		[default] interface IRRActiveConnector;
+		[default, source] dispinterface _IRRActiveConnectorEvents;
+	};
+#if defined WITHLOOPSCOLLECTION
+	[
+		uuid(B1943F94-C089-448F-8224-811CE2B234DE)		
+	]
+	coclass RRActiveRemoteLoops
+	{
+		[default] interface IRRActiveRemoteLoops;
+	};
+#endif
+};
